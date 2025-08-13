@@ -38,7 +38,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 Long id = Long.parseLong(JwtUtil.getValue(claims, JwtUtil.ID_NAME));
 
                 UserAuth authUser = UserAuth.builder()
-                        .id(id)
+                        .idx(id)
                         .email(email)
                         .build();
 

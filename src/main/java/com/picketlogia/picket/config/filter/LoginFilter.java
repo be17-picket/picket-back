@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.picketlogia.picket.api.user.model.UserAuth;
 import com.picketlogia.picket.api.user.model.UserLogin;
 import com.picketlogia.picket.api.user.model.UserLoginResp;
+import com.picketlogia.picket.common.model.BaseResponse;
 import com.picketlogia.picket.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -47,14 +48,18 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         System.out.println("LoginFilter 성공 로직.");
         UserAuth authUser = (UserAuth) authResult.getPrincipal();
 
-        String jwt = JwtUtil.generateToken(authUser.getEmail(), authUser.getId());
+        String jwt = JwtUtil.generateToken(authUser.getEmail(), authUser.getIdx());
 
         if(jwt != null) {
             Cookie cookie = new Cookie(JwtUtil.TOKEN_NAME, jwt);
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             response.addCookie(cookie);
-            response.getWriter().write(new ObjectMapper().writeValueAsString(UserLoginResp.from(authUser)));
+            response.getWriter().write(
+                    new ObjectMapper().writeValueAsString(
+                            BaseResponse.success(UserLoginResp.from(authUser))
+                    )
+            );
         }
 
 

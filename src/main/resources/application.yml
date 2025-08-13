@@ -36,7 +36,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-#  cloud:
+    defer-datasource-initialization: true
+  #  cloud:
 #    aws:
 #      credentials:
 #        access-key:
@@ -49,8 +50,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username:
-    password:
+    username: picketnologya@gmail.com
+    password: ayxh dkbf tdgm grkj
     properties:
       mail:
         smtp:
@@ -59,3 +60,8 @@ spring:
             required: true
           auth: true
           timeout: 5000
+
+  data:
+    redis:
+      host: localhost
+      port: 6379

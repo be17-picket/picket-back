@@ -9,19 +9,19 @@ public class UserRegister {
     private String password;
     private String nickname;
     private String name;
-    private String birthday;
+    private String birth;
     private String gender;
-    private String contact;
+    private String phoneNumber;
 
-    public User from() {
+    public User toEntity() {
         return User.builder()
                 .email(email)
                 .password(password)
                 .nickname(nickname)
                 .name(name)
-                .birthday(birthday)
+                .birth(birth)
                 .gender(gender)
-                .contact(contact)
+                .phoneNumber(phoneNumber)
                 .build();
     }
 }
