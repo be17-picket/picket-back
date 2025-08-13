@@ -35,7 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             Claims claims = JwtUtil.getClaims(jwt);
             if(claims!= null) {
                 String email = JwtUtil.getValue(claims, JwtUtil.EMAIL_NAME);
-                Long id = Long.parseLong(JwtUtil.getValue(claims, JwtUtil.ID_NAME));
+                Long id = Long.parseLong(JwtUtil.getValue(claims, JwtUtil.IDX_NAME));
 
                 UserAuth authUser = UserAuth.builder()
                         .idx(id)

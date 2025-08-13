@@ -28,7 +28,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         UsernamePasswordAuthenticationToken authToken;
         try {
-            System.out.println("LoginFilter 실행됐다.");
 
             UserLogin dto = new ObjectMapper().readValue(request.getInputStream(), UserLogin.class);
             authToken = new UsernamePasswordAuthenticationToken(
@@ -45,7 +44,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        System.out.println("LoginFilter 성공 로직.");
         UserAuth authUser = (UserAuth) authResult.getPrincipal();
 
         String jwt = JwtUtil.generateToken(authUser.getEmail(), authUser.getIdx());
