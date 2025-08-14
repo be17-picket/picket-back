@@ -29,7 +29,6 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
-
   jpa:
     show-sql: true
     generate-ddl: true
@@ -47,7 +46,7 @@ spring:
         access-key:
         secret-key:
       s3:
-        bucket: kangseol-s3
+        bucket:
       region:
         static: ap-northeast-2
 
