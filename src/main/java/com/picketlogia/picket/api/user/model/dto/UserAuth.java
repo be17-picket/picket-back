@@ -1,4 +1,4 @@
-package com.picketlogia.picket.api.user.model;
+package com.picketlogia.picket.api.user.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -18,15 +18,16 @@ public class UserAuth implements UserDetails {
     private String password;
     private String nickname;
     private String enable;
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override
     public String getPassword() {
-        return "{noop}" + password;
+        return password;
     }
 
     @Override

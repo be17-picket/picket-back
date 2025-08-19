@@ -1,9 +1,9 @@
 package com.picketlogia.picket.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.picketlogia.picket.api.user.model.UserAuth;
-import com.picketlogia.picket.api.user.model.UserLogin;
-import com.picketlogia.picket.api.user.model.UserLoginResp;
+import com.picketlogia.picket.api.user.model.dto.UserAuth;
+import com.picketlogia.picket.api.user.model.dto.UserLogin;
+import com.picketlogia.picket.api.user.model.dto.UserLoginResp;
 import com.picketlogia.picket.common.model.BaseResponse;
 import com.picketlogia.picket.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -53,6 +53,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             response.addCookie(cookie);
+            response.setContentType("application/json; charset=UTF-8");
             response.getWriter().write(
                     new ObjectMapper().writeValueAsString(
                             BaseResponse.success(UserLoginResp.from(authUser))

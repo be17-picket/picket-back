@@ -2,7 +2,7 @@ package com.picketlogia.picket.api.product.model;
 
 import com.picketlogia.picket.api.qna.model.Qna;
 import com.picketlogia.picket.api.review.model.entity.Review;
-import com.picketlogia.picket.api.user.model.User;
+import com.picketlogia.picket.api.user.model.entity.User;
 import com.picketlogia.picket.common.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,7 +30,6 @@ public class Product extends BaseEntity {
     private LocalDate startDate; // 공연 시작일
     private LocalDate endDate; // 공연 종료일
     private Integer runningTime; // 러닝타임
-//    private String posterImage; // 포스터 이미지 경로 (파일명)
     private Integer price; // 가격
     private LocalDate sessionDate; // 회차 날짜
     private Integer sessionTime; // 회차 시간
@@ -46,8 +45,6 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "product")
-    List<ProductImage> productImageList;
-
-
+    @OneToOne(mappedBy = "product")
+    private ProductImage productImage;
 }

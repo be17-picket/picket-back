@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -42,7 +44,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(
                 (auth) -> auth
                         .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("/login", "/user/signup").permitAll()
+                        .requestMatchers("/login", "/user/signup", "/logout", "/auth/**").permitAll()
                         .anyRequest().permitAll()
         );
 
@@ -52,10 +54,16 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http.httpBasic(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);
+        http.logout(AbstractHttpConfigurer::disable);
 
         http.addFilterBefore(new JwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilterAt(new LoginFilter(configuration.getAuthenticationManager()), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

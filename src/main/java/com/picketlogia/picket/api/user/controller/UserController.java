@@ -1,17 +1,15 @@
 package com.picketlogia.picket.api.user.controller;
 
-import com.picketlogia.picket.api.user.model.GenderResp;
-import com.picketlogia.picket.api.user.model.UserRegister;
-import com.picketlogia.picket.api.user.model.UserTypeResp;
+import com.picketlogia.picket.api.user.model.dto.GenderResp;
+import com.picketlogia.picket.api.user.model.dto.UserRegister;
+import com.picketlogia.picket.api.user.model.dto.UserTypeResp;
 import com.picketlogia.picket.api.user.service.SignupService;
-import com.picketlogia.picket.api.user.service.UserService;
 import com.picketlogia.picket.common.model.BaseResponse;
+import com.picketlogia.picket.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,5 +36,19 @@ public class UserController {
         map.put("genders", GenderResp.from());
 
         return ResponseEntity.ok(BaseResponse.success(map));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<BaseResponse<Object>> logout() {
+
+        ResponseCookie responseCookie = ResponseCookie.from(JwtUtil.TOKEN_NAME, null)
+                .httpOnly(true)
+                .maxAge(0)
+                .path("/")
+                .build();
+
+        return ResponseEntity.ok()
+                .header("Set-Cookie", responseCookie.toString())
+                .body(BaseResponse.success(null));
     }
 }
