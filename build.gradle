@@ -51,10 +51,9 @@ dependencies {
 	// websocket 설정 추가
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
-	// 모니터링 설정 추가
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {
